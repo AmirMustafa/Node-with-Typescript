@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTodos, getTodos, updateTodos } from '../controllers/todos';
+import { createTodos, getTodos, updateTodos, deleteTodos } from '../controllers/todos';
 
 // Old node way
 // const express = require('express');
@@ -14,6 +14,6 @@ router.get('/', getTodos);
 
 router.patch('/:id', updateTodos);
 
-router.delete('/:id');
+router.delete('/:id', deleteTodos);
 
 export default router;

@@ -32,4 +32,22 @@ export const updateTodos: RequestHandler<{id: string}> = (req, res, next) => {
 
 
     res.status(201).json({message: 'Todo updated successfully', updateTodo:  TODOS[todoIndex]});
+
 };
+
+export const deleteTodos: RequestHandler<{id: string}> = (req, res, next) => {
+    const todoId = req.params.id;
+    const todoIndex = TODOS.findIndex(x => x.id === todoId);
+
+    if(todoIndex < 0) {
+        throw new Error('Could not find todo!');
+    }
+    console.log( TODOS[todoIndex].text, typeof todoIndex );
+   const deletedData = {id: TODOS[todoIndex].id, text: TODOS[todoIndex].text};
+    
+    TODOS.splice(todoIndex, 1);
+    res.status(201).json({message: `${deletedData.id}: ${deletedData.text} deleted successfully`})
+       
+}
+
+

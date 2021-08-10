@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTodos = exports.getTodos = exports.createTodos = void 0;
+exports.deleteTodos = exports.updateTodos = exports.getTodos = exports.createTodos = void 0;
 const todos_1 = require("../models/todos");
 const TODOS = [];
 const createTodos = (req, res, next) => {
@@ -27,3 +27,15 @@ const updateTodos = (req, res, next) => {
     res.status(201).json({ message: 'Todo updated successfully', updateTodo: TODOS[todoIndex] });
 };
 exports.updateTodos = updateTodos;
+const deleteTodos = (req, res, next) => {
+    const todoId = req.params.id;
+    const todoIndex = TODOS.findIndex(x => x.id === todoId);
+    if (todoIndex < 0) {
+        throw new Error('Could not find todo!');
+    }
+    console.log(TODOS[todoIndex].text, typeof todoIndex);
+    const deletedData = { id: TODOS[todoIndex].id, text: TODOS[todoIndex].text };
+    TODOS.splice(todoIndex, 1);
+    res.status(201).json({ message: `${deletedData.id}: ${deletedData.text} deleted successfully` });
+};
+exports.deleteTodos = deleteTodos;
