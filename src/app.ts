@@ -1,8 +1,11 @@
 import express, {Request, Response, NextFunction} from 'express';
 import todoRoutes from './routes/todos';
-const app = express();
+import { json } from 'body-parser';
 
-app.use('/todos', todoRoutes);
+const app = express();
+app.use(json());  // registering this middleware for accepting json requests
+
+app.use('/todos', todoRoutes); // All route must precees with this path
 app.use((err: Error, req: Request, res:Response, next: NextFunction) => {
     res.status(500).json({message: err.message});
 });

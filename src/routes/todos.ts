@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { createTodos } from '../controllers/todos';
 
 // Old node way
 // const express = require('express');
@@ -6,7 +7,8 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.post('/');
+
+router.post('/', createTodos);
 
 router.get('/');
 
