@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTodos } from '../controllers/todos';
+import { createTodos, getTodos, updateTodos } from '../controllers/todos';
 
 // Old node way
 // const express = require('express');
@@ -10,9 +10,9 @@ const router = Router();
 
 router.post('/', createTodos);
 
-router.get('/');
+router.get('/', getTodos);
 
-router.patch('/:id');
+router.patch('/:id', updateTodos);
 
 router.delete('/:id');
 

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTodos = void 0;
+exports.updateTodos = exports.getTodos = exports.createTodos = void 0;
 const todos_1 = require("../models/todos");
 const TODOS = [];
 const createTodos = (req, res, next) => {
@@ -12,3 +12,18 @@ const createTodos = (req, res, next) => {
     res.json({ message: 'Todo created successfully', createdTodo: newTodo });
 };
 exports.createTodos = createTodos;
+const getTodos = (req, res, next) => {
+    res.status(200).json({ "todos": TODOS });
+};
+exports.getTodos = getTodos;
+const updateTodos = (req, res, next) => {
+    const todoId = req.params.id;
+    const updatedText = req.body.text;
+    const todoIndex = TODOS.findIndex(x => x.id === todoId);
+    if (todoIndex < 0) {
+        throw new Error('Could not find todo!');
+    }
+    TODOS[todoIndex] = new todos_1.Todo(TODOS[todoIndex].id, updatedText);
+    res.status(201).json({ message: 'Todo updated successfully', updateTodo: TODOS[todoIndex] });
+};
+exports.updateTodos = updateTodos;

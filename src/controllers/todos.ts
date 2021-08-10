@@ -14,3 +14,22 @@ export const createTodos:RequestHandler = (req, res, next) => {
 
     res.json({message: 'Todo created successfully', createdTodo: newTodo});
 };
+
+export const getTodos:RequestHandler = (req, res, next) => {
+    res.status(200).json({"todos": TODOS});
+};
+
+export const updateTodos: RequestHandler<{id: string}> = (req, res, next) => {
+    const todoId = req.params.id;
+    const updatedText = (req.body as { text:string }).text; 
+    const todoIndex = TODOS.findIndex(x => x.id === todoId);
+    
+    if(todoIndex < 0) {
+        throw new Error('Could not find todo!');
+    }
+
+    TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updatedText);
+
+
+    res.status(201).json({message: 'Todo updated successfully', updateTodo:  TODOS[todoIndex]});
+};
